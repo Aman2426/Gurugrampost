@@ -1,0 +1,15 @@
+{% extends "Blog/base.html" %}
+{% block title %} {{article.title|title}} {% endblock %}
+{% block content %}
+
+<p>Are you sure you want to delete {{ article.title|title }}</p>
+<form action="{% url 'blog:article_delete' article.date_pub.year article.date_pub.month article.slug %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes">  
+</form>
+<button><a href="{% url 'blog:article_list' %}">NO</a></button>
+
+<p><a href="{% url 'blog:article_list' %}">Go back to Article index</a></p>
+<p><a href="{% url 'blog:article_update' article.date_pub.year article.date_pub.month article.slug %}">Update this article</a></p>
+
+{% endblock %}

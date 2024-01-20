@@ -1,0 +1,21 @@
+{% extends "Blog/base.html" %}
+{% block title %} {{author.au_name}} {% endblock %}
+{% block content %}
+<h2>{{author.au_name|title}}</h2>
+<ul>
+    <li>{{ author.au_name }}</li>
+    <li>{{ author.au_bio }}</li>
+</ul>
+<ul>
+{% for article in author.article_set.all %} 
+
+<li>
+    {{article.title}}
+</li>
+
+{% endfor %}
+</ul>
+<p><a href="{% url 'blog:cat_list' %}">Go back to Categories list</a></p>
+<p><a href="{% url 'blog:article_list' %}">Go back to Articles list</a></p>
+<p><a href="{% url 'blog:author_list' %}">Go back to Authors list</a></p>
+{% endblock %}

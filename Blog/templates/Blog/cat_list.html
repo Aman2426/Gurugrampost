@@ -1,0 +1,14 @@
+{% extends "Blog/base.html" %}
+{% block title %} Category List {% endblock %}
+{% block content %}
+<h2>Categories List</h2>
+<ul>
+    {% for cat in cat_list %}
+    <li>
+        <a href="{% url 'blog:cat_detail' cat.slug %}">{{cat.cat_name|title}}</a>
+    </li>
+{% endfor %}
+</ul>
+<p><a href="{% url 'blog:article_list' %}">Go back to Articles List</a></p>
+<p><a href="{% url 'blog:cat_create' %}">Create a Category</a></p>
+{% endblock %}

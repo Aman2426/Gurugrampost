@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheFirstBlog</title>
+</head>
+<body>
+    <h1>You are now in template</h1>
+    <ul>
+        {% for cat in catg %}
+        <li>
+        {{ cat.cat_name }}, 
+        {% for at in cat.article_set.all %} {{ at.title}} {% endfor %}
+        </li>
+    
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for art in art_list %}
+        <li>
+        {{ art.title }}
+        </li>
+        <li>
+            {{ art.author }}
+        </li>
+        <li>
+            {{ art.text }}
+        </li>
+        <li>
+            {{ art.date_pub }}
+        </li>
+        {% endfor %}
+    </ul>
+    
+</body>
+</html>

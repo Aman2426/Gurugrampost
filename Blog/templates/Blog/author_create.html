@@ -1,0 +1,14 @@
+{% extends "Blog/base.html" %}
+{% block title %} Register a new Author {% endblock %}
+{% block content %}
+<h2>Author Registration</h2>
+<form
+      action="{% url 'blog:author_create' %}"
+      method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">
+      Create Author</button>
+  </form>
+  <p><a href="{% url 'blog:article_list' %}"></a>
+{% endblock %}

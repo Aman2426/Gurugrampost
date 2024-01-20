@@ -1,0 +1,16 @@
+{% extends "Blog/base.html" %}
+{% block title %} Update Category {% endblock %}
+{% block content %}
+  <div>
+    <div>
+      <form
+          action="{{ category.get_update_url }}"
+          method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">
+          Update Category</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+
+<div class="top">
+    <div>About</div>
+    <div>Contact Us</div>
+    <div>Facebook</div>
+    <div>Twitter</div>
+</div>
+
+<div class="header">
+    <div id="date-time">
+        <h5>{% now "l" %}</h5>
+        <h5>{% now "M jS Y" %}</h5>
+        <h5>{% now 'G:i' %}</h5>
+    </div>
+    <div class="logo">
+        <p>The Gurugram Post</p>
+    </div>
+    <div class="profile">
+        {% if user.is_authenticated %}
+            <a class='btn btn-success' href="{% url 'users:user_page' %}"><i class="bi bi-person-fill"></i> {{user.username|title}}</a>
+            <a id='logout_button' class='btn btn-danger' href="{% url 'users:logout' %}">Logout</a>
+         {% else %}   
+            <a id='login_button' class='btn btn-primary' href="{% url 'users:login' %}">Login</a>
+            <a id='register_button' class="btn btn-secondary" href="{% url 'users:register' %}">Register</a>
+        {% endif %}
+    </div>
+
+</div>
+
+<div class="nav-toggle">
+    <div class="btn btn-dark nav-toggle-button"><i class="bi bi-list"></i> Menu</div>
+    <div class="nav-logo">The Gurugram Post</div>
+    <div class="btn btn-success">{{user.username|title}}</div>
+</div>
+<nav class="nav">
+    <div><a href="{% url 'blog:article_list' %}">Home</a></div>
+    <div><a href="">India</a></div>
+    <div><a href="">World</a></div>
+    <div><a href="">Science</a></div>
+    <div><a href="">Business</a></div>
+    <div><a href="">Gurugram</a></div>
+    <div><a href="">Politics</a></div>
+    <div><a href="">Automobile</a></div>
+</nav>

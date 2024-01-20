@@ -1,0 +1,16 @@
+{% extends "Blog/base.html" %}
+{% block title %} Update Article {% endblock %}
+{% block content %}
+  <div>
+    <div>
+      <form
+          action="{{ obj.get_update_url }}"
+          method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">
+          Update Article</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

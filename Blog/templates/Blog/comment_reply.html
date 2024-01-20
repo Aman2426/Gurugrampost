@@ -1,0 +1,23 @@
+{% for reply in replies %}
+
+    <ul class='replies'>
+        <li style="margin-left:{{depth|add:'20'}}px;">
+            <div class="comment">
+                <p>{{ reply.text }}</p>
+                <p>{{ reply.user.username }} replied to {{reply.parent.user}} on {{ reply.created_date }}</p>
+                {% if user.is_authenticated %}
+                    {% if reply.user == user %}
+                        <a class="edit_comment_button btn" href="{% url 'blog:edit_comment' reply.id %}">Edit Comment</a>
+                    {% endif %}
+                    <a class="reply_button btn">Reply</a>
+                    <form class="reply_form" method="POST" action="{% url 'blog:reply_comment' reply.id %}">
+                        {% csrf_token %}
+                        {{ comment_form.as_p }}
+                        <button class='btn btn-secondary' type="submit">Submit</button>
+                    </form>
+                {% endif %}
+            </div>
+                {% include 'Blog/comment_reply.html' with replies=reply.comment_set.all.reverse depth=depth %}
+        </li>
+    </ul>
+{% endfor %}

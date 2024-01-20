@@ -1,0 +1,124 @@
+{% extends "Blog/base.html" %}
+
+{% block title %} {{article.title|title}} {% endblock %}
+
+{% block content %}
+
+{%load static%}
+
+{% get_static_prefix as STATIC_PREFIX %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1>{{article.title|title}}</h1>
+      <h6>Published: {{article.date_pub}}</h6>
+      <h6>Author: {{article.author}}</h6>
+      <p>Votes: {{ article.vote_set.count }}</p>
+      <!-- Submit a Vote -->
+
+      {% if user.is_authenticated %}
+      <form id='vote_form' action="{% url 'blog:vote' article.id %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-info" type="submit">Vote Up <i class="bi bi-hand-thumbs-up-fill"></i></button>
+        <button class="btn btn-warning" type="submit">Bookmark <i class="bi bi-bookmark-plus"></i></button>
+      </form>
+      
+      {% endif %}
+    </div>
+
+    <div class="col-sm-4 text-center">
+      
+    </div>
+  </div>
+ 
+  <div class="row">
+    <div class="col-sm-8">
+      <img width=100% src="{{article.img.url}}" alt="">
+      <article>
+        <div class="article_text">
+          <p>{{article.text}}</p>
+        </div>
+      </article>
+    </div>
+    <div class="col-md-4 text-center ms-5">
+      <h2 class="border-bottom">Most Read</h2>
+      {% for art in articles %}
+        <div class="side-card">
+          <img class='p-5' src="{{ art.img.url }}" alt="" width=100%>
+          <h4>{{art.title|title}}</h4>
+        </div>
+      {% endfor %}      
+    </div>
+  </div>
+ 
+</div>
+
+
+<!-- Add a comment -->
+<div class="container-fluid">
+  {% if user.is_authenticated %}
+  <h2>Add a comment</h2>
+  <form class='comment_form' id="comment-form" method="POST">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <input type="hidden" name="form_id" value="commentform">
+    <button class='btn btn-secondary' type="submit">Submit</button>
+  </form>
+{% else %} 
+  <p>Sign in to Comment!</p>
+{% endif %}
+</div>
+
+
+
+
+
+<!-- Categories List for Article  -->
+<!-- 
+<h4>Categories</h4>
+<ul>
+{% for cat in article.cat.all %}
+<li>
+    {{cat.cat_name}}
+</li>
+{% endfor %}
+</ul> -->
+
+<!-- Display Comments  -->
+<div class="container-fluid">
+  <h2>Comments</h2>
+  <ul id="comments">
+    {% for comment in comments %}
+      <li>
+        <div class="comment">
+          <p>{{ comment.text }}</p>
+          <p>by {{ comment.user.username }} on {{ comment.created_date }}</p>
+          {% if user.is_authenticated %}
+              {% if comment.user == user %}
+                  <a class="edit_comment_button btn" href="{% url 'blog:edit_comment' comment.id %}">Edit Comment</a>
+              {% endif %}
+              <button class="reply_button">Reply</button>
+              <form class="reply_form" method="POST" action="{% url 'blog:reply_comment' comment.id %}">
+                  {% csrf_token %}
+                  {{ comment_form.as_p }}
+                  <button class='btn btn-secondary' type="submit">Submit</button>
+              </form>
+          {% endif %}
+        </div>
+        {% include 'Blog/comment_reply.html' with replies=comment.comment_set.all.reverse depth=0 %}
+      </li>
+      {% empty %}
+        <li>No comments yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+
+
+
+<p><a href="{% url 'blog:article_list' %}">Go back to Article index</a></p>
+<p><a href="{{article.get_update_url}}">Update this article</a></p>
+<p><a href="{% url 'blog:article_delete' article.date_pub.year article.date_pub.month article.slug %}">Delete this article</a></p>
+{% endblock %}
