@@ -19,3 +19,12 @@ document.querySelector('.nav-toggle-button').addEventListener('click', function(
     // Toggle the 'active' class on the navbar
     document.querySelector('.nav').classList.toggle('active');
   });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('password_change_form');
+    var inputs = form.querySelectorAll('input');
+
+    inputs.forEach(function(input) {
+        input.classList.add('form-control');
+    });
+});

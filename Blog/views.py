@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
-from .models import Article, Category, Vote, Comment
-from .forms import CategoryForm, ArticleForm, CommentForm
+from .models import Article, Category, Vote, Comment, Bookmark, Section
+from .forms import CategoryForm, ArticleForm, CommentForm, FeaturedArticleForm
 from .utils import ObjectCreateMixin, ObjectUpdateMixin
 from django.contrib.auth.views import LoginView
 from django.template import loader,Context
@@ -15,9 +15,55 @@ from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.decorators import permission_required, \
                                             login_required
 import datetime
+from django.forms import formset_factory
+from django.core.paginator import Paginator
 
 
 # Create your views here.
+
+def section_view(request, slug): 
+    section=Section.objects.get(slug=slug)
+    articles=section.article_set.all()
+    paginator=Paginator(articles,3)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    template='Blog/section_view.html'
+    context={
+        'articles':articles,
+        'section':section,
+        'page_obj':page_obj
+    }
+    return render(request,template,context)
+
+
+def toggle_featured(request, pk):
+    if request.method == 'POST':
+        article = get_object_or_404(Article,pk=pk)
+        form=FeaturedArticleForm(request.POST,instance=article)
+        if form.is_valid():
+            form.save()
+    return redirect('blog:control_center')
+
+
+def control_center(request):
+ 
+    template='Blog/control_center.html'
+    featured_articles=Article.objects.filter(featured=True)
+    article_list=Article.objects.all().order_by('-featured','-date_pub')
+    form=[FeaturedArticleForm(instance=x) for x in article_list]
+    combined=zip(article_list,form)
+    paginator=Paginator(list(combined),25)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    context={
+        'featured_articles':featured_articles,
+        "article_list" : article_list,
+        'form':form,
+        'combined':combined,
+        'page_obj':page_obj,
+    }
+    
+    return render(request,template,context)
 
 # Article List
 
@@ -25,7 +71,15 @@ import datetime
 def article_list(request):
     template="Blog/article_list.html"
     article_list=Article.objects.all()
-    ctx={"article_list":article_list}
+    featured_articles=Article.objects.filter(featured=True)[:4]
+    section_editorial = Article.objects.filter(section=Section.objects.get(name='Science'))[:4]
+    sections_list= Section.objects.all()
+    ctx = {
+        "article_list" : article_list,
+        'featured_articles':featured_articles,
+        'section_editorial':section_editorial,
+        'sections_list':sections_list,
+        }
     return render(request,template,ctx)
 
 # Article Detail
@@ -42,7 +96,7 @@ def article_detail(request,year,month,slug):
     
     comments=article.comments.filter(parent=None,).reverse()
 
-    articles=Article.objects.all()[:7]
+    articles=Article.objects.all().exclude(pk=article.pk)[:7]
     
     if request.method == 'GET':
         comment_form=CommentForm()
@@ -207,7 +261,17 @@ def edit_comment(request, pk):
 def delete_comment(request, id):
     pass
 
-
+#Add a Bookmark
+@login_required
+def bookmark(request,pk):
+    article = get_object_or_404(Article, pk=pk)
+    if request.method == 'POST':
+        if not Bookmark.objects.filter(user=request.user, article=article).exists():
+            Bookmark.objects.create(user=request.user, article=article)
+            messages.success(request, 'Your bookmark was successfully added.')
+        else:
+            messages.warning(request, 'You already bookmarked this article.')
+    return redirect(article)
 
 
 

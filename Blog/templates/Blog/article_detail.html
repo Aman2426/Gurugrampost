@@ -15,15 +15,22 @@
       <h6>Published: {{article.date_pub}}</h6>
       <h6>Author: {{article.author}}</h6>
       <p>Votes: {{ article.vote_set.count }}</p>
+      <p><a href="{{article.section.get_absolute_url}}">{{ article.section }}</a></p>
+
       <!-- Submit a Vote -->
 
       {% if user.is_authenticated %}
-      <form id='vote_form' action="{% url 'blog:vote' article.id %}" method="post">
+      <form id='vote_form' style='display: inline-block;' action="{% url 'blog:vote' article.id %}" method="post">
         {% csrf_token %}
         <button class="btn btn-info" type="submit">Vote Up <i class="bi bi-hand-thumbs-up-fill"></i></button>
+        
+      </form>
+      <form id='bookmark_form' style='display: inline-block;' action="{% url 'blog:bookmark' article.id %}" method="post">
+        {% csrf_token %}
         <button class="btn btn-warning" type="submit">Bookmark <i class="bi bi-bookmark-plus"></i></button>
       </form>
-      
+      {% else %}
+      <p>Sign in to Vote Up and Bookmark!</p>
       {% endif %}
     </div>
 
@@ -34,19 +41,21 @@
  
   <div class="row">
     <div class="col-sm-8">
-      <img width=100% src="{{article.img.url}}" alt="">
+      <img width=100% src="{{article.img.url}}" alt="Cover Image">
       <article>
         <div class="article_text">
-          <p>{{article.text}}</p>
+          <p>{{article.text | safe}}</p>
         </div>
       </article>
     </div>
     <div class="col-md-4 text-center ms-5">
       <h2 class="border-bottom">Most Read</h2>
       {% for art in articles %}
-        <div class="side-card">
-          <img class='p-5' src="{{ art.img.url }}" alt="" width=100%>
+        <div class="side_card">
+          <a href="{{art.get_absolute_url}}">
+          <img class='py-2' src="{{ art.img.url }}" alt="" width=100%>
           <h4>{{art.title|title}}</h4>
+          </a>
         </div>
       {% endfor %}      
     </div>
@@ -65,9 +74,9 @@
     <input type="hidden" name="form_id" value="commentform">
     <button class='btn btn-secondary' type="submit">Submit</button>
   </form>
-{% else %} 
-  <p>Sign in to Comment!</p>
-{% endif %}
+  {% else %} 
+    <p>Sign in to Comment!</p>
+  {% endif %}
 </div>
 
 

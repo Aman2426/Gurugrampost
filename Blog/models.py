@@ -9,15 +9,26 @@ from ckeditor.fields import RichTextField
 
 
 # Create your models here.
+
+class Bookmark(models.Model):
+    article=models.ForeignKey('Article',on_delete=models.CASCADE)
+    user=models.ForeignKey(
+        get_user_model(), 
+        on_delete=models.CASCADE)
+    def __str__(self):
+        return f'{self.user.username} Bookmarked {self.article.title}'
+
 class Article(models.Model):
-    title=models.CharField(max_length=50)
+    title=models.CharField(max_length=100)
     date_pub=models.DateTimeField("Published DateTime",auto_now_add=True) #auto_now_add is for adding date when first created, not whenever updated
-    author=models.ForeignKey(Profile,on_delete=models.CASCADE) 
-    cat=models.ManyToManyField("Category")
+    author=models.ForeignKey(get_user_model(),on_delete=models.CASCADE) 
+    cat=models.ManyToManyField("Category",verbose_name="Category")
     text=RichTextField()
-    img=models.ImageField(null=True,blank=True)
+    img=models.ImageField(verbose_name='Cover Image',null=True,blank=True)
     slug=models.SlugField(max_length=50, unique_for_month="date_pub")    #must include only lowercase alphanumeric characters and dashes
-    updated_at=models.DateTimeField(auto_now=True)
+    updated_at=models.DateTimeField("Updated on",auto_now=True)
+    featured=models.BooleanField(verbose_name='Home Page(Featured)',default=False)
+    section=models.ForeignKey('Section',on_delete=models.CASCADE,default=None,null=True)
 
     class Meta:
         ordering = ('-date_pub',)
@@ -39,7 +50,7 @@ class Article(models.Model):
 
 
 class Category(models.Model):
-    cat_name=models.CharField(max_length=30, unique=True)
+    cat_name=models.CharField(max_length=45, unique=True)
     slug=models.SlugField(max_length=30,unique=True)
     img=models.ImageField(blank=True)
 
@@ -51,6 +62,17 @@ class Category(models.Model):
 
     def __str__(self):
         return self.cat_name
+
+class Section(models.Model):
+    name=models.CharField(max_length=45, unique=True)
+    slug=models.SlugField(max_length=30,unique=True)
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('blog:section_view',kwargs={'slug':self.slug})
+
 
 class Vote(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)

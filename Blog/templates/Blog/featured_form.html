@@ -1,0 +1,6 @@
+{% for field in form %}
+    <span style="padding: 0px 5px 0px 5px;" class="fieldWrapper">
+        {{ field.errors }}
+        {{ field }}
+    </span>
+{% endfor %}

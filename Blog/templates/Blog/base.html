@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="en">
   {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
   {% load static %}
+  {% load crispy_forms_tags %}
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">

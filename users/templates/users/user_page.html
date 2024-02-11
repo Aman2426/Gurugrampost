@@ -1,6 +1,64 @@
 {% extends 'Blog/base.html' %}
 {% block content %}
-<h1>Welcome</h1>
-<p>{{user.username}}</p>
-<a href="{% url 'users:password_change' %}" class="btn btn-warning">Change Password</a>
+
+<h3>Welcome, {{user.username}}</h3>
+
+<br>
+<div class="row">
+    <a href="{% url 'users:password_change' %}" class="btn btn-warning mx-2">Change Password</a>
+    <a href="{% url 'blog:article_create' %}" class="btn btn-primary mx-2">Publish Article</a>
+    <a href="{% url 'users:update_profile' %}" class="btn btn-success mx-2">Update Profile</a>
+    <a href="{% url 'blog:control_center' %}" class="btn btn-info mx-2">Control Center</a>
+
+</div>
+
+<br>
+
+<h3>Your Bookmarked Articles</h3>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Section</th>
+        <th scope="col">Published on</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for art in user.bookmark_set.all %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td><a href="{{art.article.get_absolute_url}}">{{art.article.title|title}}</a></td>
+        <td>{{art.article.section}}</td>
+        <td>{{art.article.date_pub}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <br>
+
+<h3>Your Comments</h3>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Comment</th>
+        <th scope="col">Article</th>
+        <th scope="col">Commented on</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for comment in user.comment_set.all %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td><a href="{{comment.article.get_absolute_url}}">{{comment.text|title}}</a></td>
+        <td>{{comment.article.title|title}}</td>
+        <td>{{comment.created_date}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
 {% endblock %}

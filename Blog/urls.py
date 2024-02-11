@@ -18,9 +18,14 @@ urlpatterns = [
     path('category/update/<slug:slug>', views.CategoryUpdate.as_view(), name='category_update'),  #may have to change urlpattern
     path('category/<slug:slug>', views.cat_detail, name='cat_detail'),
     path("categories", views.cat_list, name="cat_list"),
+    path("section/<slug:slug>", views.section_view, name="section_view"),
     
     path("vote/<int:pk>", views.vote, name="vote"),
     path("reply/<int:pk>", views.reply_comment, name="reply_comment"),
     path("edit_comment/<int:pk>", views.edit_comment, name="edit_comment"),
+    path("bookmark/<int:pk>", views.bookmark, name="bookmark"),
+
+    path("control_center", views.control_center, name="control_center"),
+    path("toggle_featured/<int:pk>", views.toggle_featured, name="toggle_featured"),
     
 ] 

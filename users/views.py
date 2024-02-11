@@ -5,10 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import permission_required,login_required
 import datetime
-from .forms import CreateUserForm
+from .forms import CreateUserForm, UpdateProfileForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
+from .models import Profile
 
 def signup(request):
     if request.method == 'POST':
@@ -49,8 +50,8 @@ def register_page(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            user=form.cleaned_data['username']
-            messages.success(request, 'Account was succesfully created for {}'.format(user))
+            user_name=form.cleaned_data['username']
+            messages.success(request, 'Account was succesfully created for {}'.format(user_name))
             return redirect('users:login')
         else:
             print(form.is_bound)
@@ -71,3 +72,19 @@ def user_page(request):
 class Login(LoginView):
     template_name = "accounts/login2.html"
     next_page = reverse_lazy("blog:article_list")
+
+def update_profile(request):
+    form = UpdateProfileForm()
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile was updated')
+            return redirect('users:profile')
+        else:
+            print(form.is_bound)
+            print(request.POST)
+            context = {'form':form}
+            return render (request, "users/register.html", context)
+    context = {'form':form}
+    return render(request, "users/update_profile.html", context)

@@ -38,8 +38,9 @@ class ArticleForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': "form-control",
-                'style': 'max-width: 300px;',
-                'placeholder': 'Article Title'
+                'style': '',
+                'placeholder': 'Article Title',
+                'minlength':60,
                 }),
             'slug': forms.TextInput(attrs={
                 'class': "form-control",
@@ -47,9 +48,9 @@ class ArticleForm(forms.ModelForm):
                 'placeholder': 'Slug'
                 }),
             'cat': forms.CheckboxSelectMultiple(attrs={
-                'class': "form-check",
-                'style': 'max-width: 300px;',
-                'placeholder': 'Name'
+                'class': "",
+                'style': 'display:inline-block;',
+                'placeholder': 'Categories'
                 }),
             
         }
@@ -70,3 +71,11 @@ class CommentForm(forms.ModelForm):
     class Meta: 
         model=Comment
         fields=['text',]
+
+class FeaturedArticleForm(forms.ModelForm):
+
+    template_name = 'Blog/featured_form.html'
+    
+    class Meta: 
+        model=Article
+        fields=['featured',]

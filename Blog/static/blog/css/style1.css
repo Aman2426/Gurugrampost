@@ -286,4 +286,107 @@ ul#comments>li{
   }
 
 
- 
+
+/* Tables designs control center  */
+
+
+
+#control_table tr:nth-child(even) {
+  background-color: #19e2923b;
+}
+#control_table{
+  border: 1px solid rgb(3, 1, 1);
+  width: 100%;
+}
+#control_table th{
+  padding: 5px;
+
+}
+#control_table tr{
+  border: 1px solid rgba(16, 13, 13, 0.196);
+  padding: 5px;
+
+}
+#control_table td{
+  padding: 5px;
+}
+
+/* newc ard */
+
+
+.front_card {
+  padding: 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.295);
+  
+}
+.front_card .headline_main, .pub_time{
+  padding:5px;
+  margin: 0px;
+
+}
+
+.pub_time{
+  font-size: small;
+}
+
+.section_p{
+  margin: 0px;
+  padding:5px;
+
+}
+
+.front_card>a{
+  text-decoration: none;
+  cursor: pointer;
+}
+.front_card:hover{
+  background-color: rgba(128, 128, 128, 0.152);
+}
+
+/* sections  */
+
+.section_heading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #26272b;
+  border-bottom: 1px solid #26272b;
+  margin: 5px 5px;
+}
+
+.section_card{
+  display: flex;
+  background-color: #d6cece13;
+  border: 1px solid rgba(37, 36, 36, 0.104);
+  border-radius: 5px;
+}
+
+.section_card:hover{
+  background-color: #d6cece37;
+}
+
+.section_card .card_img{
+  flex: 1 0 30%;
+}
+
+.section_card .card_body{
+  flex: 1 0 70%;
+}
+.section_card .card_body a,p{
+  text-decoration: none;  
+}
+
+
+.side_card{
+  padding: 20px;
+}
+.side_card a{
+  text-decoration: grey;
+  color: black;
+  font-family: 'Times New Roman', Times, serif;
+}
+.side_card a:hover{
+  color: rgba(42, 41, 41, 0.618);
+  font-family: 'Times New Roman', Times, serif;
+}

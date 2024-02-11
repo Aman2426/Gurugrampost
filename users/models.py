@@ -8,6 +8,7 @@ class Profile(models.Model):
     slug=models.SlugField(max_length=60, unique=True)
     img=models.ImageField()
     dob=models.DateTimeField('Date of Birth')
+    joined_date= models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,64 @@
+{% extends 'Blog/base.html' %}
+{% block content %}
+
+<h2>Currently Featured Articles</h2>
+
+<ul>
+    {% for article in featured_articles %}
+    <li>
+        <a href="{{article.get_absolute_url}}">{{article.title}}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<div class="row">
+
+  <table id="control_table">
+      <tr>
+        <th>Article</th>
+        <th>Featured</th>
+        <th>Change Form</th>
+        <th>Published Date</th>
+        <th>Section</th>
+        <th>Author</th>
+      </tr>
+      {% for article,form in page_obj %}
+      <tr>
+        <td>{{article.title}}</td>
+        <td>{{article.featured}}</td>
+        <td>
+          <form action="{% url 'blog:toggle_featured' article.id %}" method="POST">
+              {% csrf_token %}
+              {{form}}
+              <span><button type="submit" style="display: inline-block;" class="btn btn success">Change</button></span>
+            </form>
+        </td>
+        <td>{{article.date_pub}}</td>
+        <td>{{article.section}}</td>
+        <td>{{article.author}}</td>
+      </tr>
+      {% endfor %}
+  </table>
+</div>
+
+<div class="row justify-content-center">
+  <div class="pagination my-3">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+
+{% endblock %}

@@ -17,7 +17,7 @@
     </div>
     <div class="profile">
         {% if user.is_authenticated %}
-            <a class='btn btn-success' href="{% url 'users:user_page' %}"><i class="bi bi-person-fill"></i> {{user.username|title}}</a>
+            <a class='btn btn-success' href="{% url 'users:profile' %}"><i class="bi bi-person-fill"></i> {{user.username|title}}</a>
             <a id='logout_button' class='btn btn-danger' href="{% url 'users:logout' %}">Logout</a>
          {% else %}   
             <a id='login_button' class='btn btn-primary' href="{% url 'users:login' %}">Login</a>
@@ -34,11 +34,11 @@
 </div>
 <nav class="nav">
     <div><a href="{% url 'blog:article_list' %}">Home</a></div>
-    <div><a href="">India</a></div>
-    <div><a href="">World</a></div>
-    <div><a href="">Science</a></div>
-    <div><a href="">Business</a></div>
-    <div><a href="">Gurugram</a></div>
-    <div><a href="">Politics</a></div>
-    <div><a href="">Automobile</a></div>
+    <div><a href="{% url 'blog:section_view' 'india' %}">India</a></div>
+    <div><a href="{% url 'blog:section_view' 'world' %}">World</a></div>
+    <div><a href="{% url 'blog:section_view' 'science' %}">Science</a></div>
+    <div><a href="{% url 'blog:section_view' 'business' %}">Business</a></div>
+    <div><a href="{% url 'blog:section_view' 'gurugram' %}">Gurugram</a></div>
+    <div><a href="{% url 'blog:section_view' 'politics' %}">Politics</a></div>
+    <div><a href="{% url 'blog:section_view' 'security' %}">Security</a></div>
 </nav>

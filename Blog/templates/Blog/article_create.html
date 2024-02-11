@@ -1,14 +1,14 @@
 {% extends "Blog/base.html" %}
 {% block title %} Create an Article {% endblock %}
 {% block content %}
-<h2>Welcome to your publishing page</h2>
+<h3>Publishing page</h3>
 <form
       action="{% url 'blog:article_create' %}"
       method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{form.media}}
     {{ form.as_p }}
-    <button type="submit">
+    <button class="btn btn-info" type="submit">
       Create Article</button>
   </form>
 {% endblock %}
