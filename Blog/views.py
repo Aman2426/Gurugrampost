@@ -22,6 +22,7 @@ from django.core.paginator import Paginator
 # Create your views here.
 
 def section_view(request, slug): 
+    
     section=Section.objects.get(slug=slug)
     articles=section.article_set.all()
     paginator=Paginator(articles,3)
@@ -33,6 +34,7 @@ def section_view(request, slug):
         'section':section,
         'page_obj':page_obj
     }
+    
     return render(request,template,context)
 
 
@@ -69,6 +71,7 @@ def control_center(request):
 
 #@permission_required('Blog.view_article')
 def article_list(request):
+    
     template="Blog/article_list.html"
     article_list=Article.objects.all()
     featured_articles=Article.objects.filter(featured=True)[:4]
@@ -80,6 +83,7 @@ def article_list(request):
         'section_editorial':section_editorial,
         'sections_list':sections_list,
         }
+    
     return render(request,template,ctx)
 
 # Article Detail

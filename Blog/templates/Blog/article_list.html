@@ -10,7 +10,7 @@
 <div class="row">
 
   <br>
-  <h2 style="font-family: Arial, Helvetica, sans-serif;"  >Featured Posts</h2>
+  <h2 style="font-family: Arial, Helvetica, sans-serif;"  >This Week's Focus</h2>
   <br>
 </div>
 
@@ -18,7 +18,7 @@
   {% for art in featured_articles %}
   <div class="front_card col-md-3">
     <a href="{{art.get_absolute_url}}">
-      <img width='100%' src="{{art.img.url}}" style="object-fit: cover;" height="200px" alt="">  
+      <img width='100%' src="{{art.img.url}}" style="object-fit:cover;" height="250px" alt="">  
       <p class="headline_main">{{art.title|title}}</p>
       <p class="pub_time">{{art.date_pub.date|time_ago}} ago</p> 
       <p class="section_p">{{art.section}}</p>
@@ -26,6 +26,7 @@
   </div>
   {% endfor %}
 </div>
+
 
 {% for section in sections_list %}
 <div class="row">
@@ -38,7 +39,7 @@
   {% for art in section.article_set.all %}
   <div class="front_card col-md-3">
     <a href="{{art.get_absolute_url}}">
-    <img width='100%' src="{{art.img.url}}" style="object-fit: cover;" height="200px" alt="">  
+    <img width='100%' src="{{art.img.url}}" style="object-fit: cover;" height="250px" alt="">  
     <p class="headline_main">{{art.title|title}}</p>
     <p class="pub_time">{{art.date_pub.date|time_ago}} ago</p> 
     </a>

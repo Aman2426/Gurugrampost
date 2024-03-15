@@ -3,7 +3,37 @@
 <div style="border-bottom:2px solid rgb(44, 47, 46);"></div> -->
 <br>
 <br>
-<p><a href="{% url 'blog:cat_list' %}">Go to categories List</a></p>
-<p><a href="{% url 'blog:article_create' %}">Publish an article</a></p>
-<p><a href="{% url 'blog:control_center' %}">Control Center</a></p>
+<div class="row">
+    <div class="footer">
+        <ul>
+            <li><strong>Main Categories</strong></li>
+            <li><a href="{% url 'blog:cat_list' %}">Go to categories List</a></li>
+            <li><a href="{% url 'blog:article_create' %}">Publish an article</a></li>
+            <li><a href="{% url 'blog:control_center' %}">Control Center</a></li>
+        </ul>
+        <ul>
+            <li><strong>Contribute</strong></li>
+            <li><a href="{% url 'blog:cat_list' %}">Go to categories List</a></li>
+            <li><a href="{% url 'blog:article_create' %}">Publish an article</a></li>
+            <li><a href="{% url 'blog:control_center' %}">Control Center</a></li>
+        </ul>
+        <ul>
+            <li><strong>Contact Us</strong></li>
+            <li><a href="{% url 'blog:cat_list' %}">Newsroom</a></li>
+            <li><a href="{% url 'blog:article_create' %}">Publish an article</a></li>
+            <li><a href="{% url 'blog:control_center' %}">Control Center</a></li>
+        </ul>
+        <ul>
+            <li><strong>Terms of Use</strong></li>
+            <li><a href="{% url 'blog:cat_list' %}">Go to categories List</a></li>
+            <li><a href="{% url 'blog:article_create' %}">Publish an article</a></li>
+            <li><a href="{% url 'blog:control_center' %}">Control Center</a></li>
+        </ul>
+    </div>
+    <div class="copyright">
+        <p>gurugrampost.com &copy; The Gurugram Post</p>
+    </div>
+</div>
+
+
 

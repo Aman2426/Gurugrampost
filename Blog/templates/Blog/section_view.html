@@ -1,5 +1,10 @@
 {% extends 'Blog/base.html' %}
 {% load custom_filters %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'blog/css/section.css' %}">
+{% endblock %}
+
 {% block content %}
 
 

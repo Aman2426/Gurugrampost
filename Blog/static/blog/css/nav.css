@@ -1,0 +1,32 @@
+.nav {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+.nav>div {
+    border-right: 1px solid #a7aaab29;
+    flex: 1;
+
+    padding: 10px;
+    text-align: center;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #444444;
+    font-size: 20px;
+
+}
+
+.nav div:hover {
+    background-color: rgba(209, 209, 209, 0.5);
+}
+
+.nav-toggle {
+    display: none;
+    text-align: left;
+    padding: 10px;
+  }

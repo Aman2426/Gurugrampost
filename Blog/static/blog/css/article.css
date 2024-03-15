@@ -1,0 +1,39 @@
+.side_card{
+    padding: 20px;
+  }
+  .side_card a{
+    text-decoration: grey;
+    color: black;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  .side_card a:hover{
+    color: rgba(42, 41, 41, 0.618);
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .article_text{
+    text-align: justify;
+    margin: 30px;
+    font-size: 18px;
+
+
+}
+
+#vote_button{
+    border-radius: 5px;
+    background-color: #7cbce1;
+    padding: 6px;
+    border: 1px solid #e1e1e1;
+    color: #3a3a3a;
+    cursor: pointer;
+}
+
+#vote_button:hover {
+    background-color: rgb(103, 236, 159);
+    font-size: 20px;
+}
+
+#vote_form{
+    padding: 10px 0px;
+}
+

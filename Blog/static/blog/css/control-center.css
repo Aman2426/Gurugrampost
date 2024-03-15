@@ -1,0 +1,21 @@
+/* Tables designs control center  */
+#control_table tr:nth-child(even) {
+    background-color: #19e2923b;
+  }
+  #control_table{
+    border: 1px solid rgb(3, 1, 1);
+    width: 100%;
+  }
+  #control_table th{
+    padding: 5px;
+  
+  }
+  #control_table tr{
+    border: 1px solid rgba(16, 13, 13, 0.196);
+    padding: 5px;
+  
+  }
+  #control_table td{
+    padding: 5px;
+  }
+  

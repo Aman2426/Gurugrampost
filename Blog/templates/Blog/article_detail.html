@@ -1,12 +1,17 @@
 {% extends "Blog/base.html" %}
+{%load static%}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'blog/css/article.css' %}">
+<link rel="stylesheet" href="{% static 'blog/css/comments.css' %}">
+{% endblock %}
 
 {% block title %} {{article.title|title}} {% endblock %}
 
 {% block content %}
 
-{%load static%}
 
-{% get_static_prefix as STATIC_PREFIX %}
 
 <div class="container-fluid">
   <div class="row">
